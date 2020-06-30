@@ -26,9 +26,16 @@ server.get("/courses", function(req, res) {
 })
 
 server.get("/courses/:id", function(req, res) {
-    const id = req.params.id;
-
-    return res.send(`O id fornecido na rota é: ${id}`)
+    const id = req.params.id
+    const course = courses.find(function(course) {
+        if (course.id == id) {
+            return true
+        }
+    })
+    if (!course) {
+        return res.render("not-found")
+    }
+    return res.render(`${id}`)
 })
 
 server.use(function(req, res) {
